@@ -36,13 +36,14 @@ ask:
          << endl;
     cout << "                                            -----------------------------------------------------------------------        " << endl
          << endl;
-    return option_exter;
+    
 
     if (option_exter > 3 || option_exter < 1)
     {
         cout << "\nInvalid input try again <3" << endl;
         goto ask;
     }
+    return option_exter;
 }
 array<string, 2> login(){
     string username;
@@ -165,7 +166,7 @@ ask:
         account_no = (account_no_start + no_of_account);
         opening << account_no << endl;
         opening.close();
-        cout << "YOUR ACCOUNT NO. IS : " << (account_no_start + no_of_account) << endl;
+        cout << "YOUR ACCOUNT NO. IS : " << account_no << endl;
 
         passw.open("passwords_username.txt", ios::out | ios::app);
         passw << username << endl;
