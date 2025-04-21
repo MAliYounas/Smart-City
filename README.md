@@ -6,6 +6,7 @@
 #include <cmath>
 #include <iomanip>
 #include <ctime>
+#include<array>
 using namespace std;
 string filepath1 = "initial";
 void beauty()
