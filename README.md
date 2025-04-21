@@ -1,5 +1,3 @@
-# Smart-City
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -11,7 +9,7 @@ using namespace std;
 string filepath1 = "initial";
 void beauty()
 {
-    cout << "\n\n*************************************************************************************************************************************************\n\n";
+    cout << "\n\n*\n\n";
     return;
 }
 char menu_external()
@@ -37,14 +35,13 @@ ask:
          << endl;
     cout << "                                            -----------------------------------------------------------------------        " << endl
          << endl;
-    
+    return option_exter;
 
     if (option_exter > 3 || option_exter < 1)
     {
         cout << "\nInvalid input try again <3" << endl;
         goto ask;
     }
-    return option_exter;
 }
 array<string, 2> login(){
     string username;
@@ -98,9 +95,10 @@ array<string, 2> login(){
         return just;
         
 }
-class Setup
+void Setup()
 {
-};
+			
+}
 void sign_up()
 {
     string name;
@@ -167,40 +165,115 @@ ask:
         account_no = (account_no_start + no_of_account);
         opening << account_no << endl;
         opening.close();
-        cout << "YOUR ACCOUNT NO. IS : " << account_no << endl;
+        cout << "YOUR ACCOUNT NO. IS : " << (account_no_start + no_of_account) << endl;
 
         passw.open("passwords_username.txt", ios::out | ios::app);
         passw << username << endl;
         passw << password << endl;
         passw.close();
     }
-    cout << "THANKS FOR OPENNING AN ACCOUNT <3" << endl;
+    cout <<"THANKS FOR OPENNING AN ACCOUNT <3" << endl;
     beauty();
 }
 class Health_Departement
 {
+	private:
+		int doctors;
+		int nurses;
+		int no_of_beds;
+	protected:
+		int level;
+		int employees;
+		double salaries;
+	public:
+		Health_Departement(int doctors, int employees, int no_of_beds, int nurses , double salaries){
+		this->	doctors=doctors;
+		this->	employees=employees;
+		this->no_of_beds=no_of_beds;
+		this->nurses=nurses;
+		this->salaries=salaries;
+		}
+		
+		void update(){
+		}
+		
 };
-class Educational_Departement
+class Educational_Departement: public Health_Departement
 {
+	private:
+		int students;
+		int teachers;
+		int no_of_classrooms;
+		public:
+			Educational_Departement(int students, int teachers, int no_of_classrooms, int level, int employees, double salaries){
+				this->students=students;
+				this->teachers=teachers;
+				this->no_of_classrooms=no_of_classrooms;
+				this->level=level;
+				this->employees=employees;
+				this->salaries=salaries;
+			}
+			
+			void update(){
+		}
+			
+			
+		
 };
 class Finance_Departement
 {
 };
 class Transport_Departement
 {
+	private:
+		int no_of_electricvehicles;
+		int no_of_petrolvehicles;
+		int no_of_dieselvehicles;
+		int trafficlights;
+		public:
+			Transport_Departement(int no_of_electricvehicles, int no_of_petrolvehicles, int no_of_dieselvehicles, int trafficlights){
+				this->no_of_electricvehicles=no_of_electricvehicles;
+				this->no_of_petrolvehicles=no_of_petrolvehicles;
+				this->no_of_dieselvehicles=no_of_dieselvehicles;
+				this->trafficlights=trafficlights;
+				
+			}
+			void update(){
+		}
+			
 };
-class Construction_Departement
+class Construction_Departement:virtual public Health_Departement
 {
+	private:
+		int no_of_resedentialbuildings;
+		int no_of_industrialbuildings;
+		int no_of_roads;
+		int no_of_parks;
+		public:
+			Construction_Departement(int no_of_buildings, int no_of_roads , int employees, int no_of_industrialbuildings, int no_of_parks){
+				this-> no_of_buildings=no_of_buildings;
+				this->no_of_roads= no_of_roads;
+				this->employees=employees;
+				this->no_of_parks=no_of_parks;
+				this->no_of_resedentialbuildings=no_of_resedentialbuildings;
+			}	
+		void update(){
+		}
+};
+class Police_Departement:virtual public Health_Departement
+{
+	
+	private:
+			
 };
 class Maintainence_Departement
 {
+	
 };
 class Environmental_Departement
 {
 };
-class Police_Departement
-{
-};
+
 class Resource_Managment
 {
 };
@@ -239,6 +312,5 @@ int main()
         }   
     }
     }while(close_external==true);
-
-    return 0;
+return 0;
 }
