@@ -35,13 +35,14 @@ ask:
          << endl;
     cout << "                                            -----------------------------------------------------------------------        " << endl
          << endl;
-    return option_exter;
+    
 
-    if (option_exter > 3 || option_exter < 1)
+    if (option_exter !='L' && option_exter != 'O' && option_exter != 'E')
     {
         cout << "\nInvalid input try again <3" << endl;
         goto ask;
     }
+    return option_exter;
 }
 array<string, 2> login(){
     string username;
@@ -175,7 +176,7 @@ ask:
     cout <<"THANKS FOR OPENNING AN ACCOUNT <3" << endl;
     beauty();
 }
-class Health_Departement
+class Health_Department
 {
 	private:
 		int doctors;
@@ -186,7 +187,7 @@ class Health_Departement
 		int employees;
 		double salaries;
 	public:
-		Health_Departement(int doctors, int employees, int no_of_beds, int nurses , double salaries){
+		Health_Department(int doctors, int employees, int no_of_beds, int nurses , double salaries){
 		this->	doctors=doctors;
 		this->	employees=employees;
 		this->no_of_beds=no_of_beds;
@@ -198,14 +199,14 @@ class Health_Departement
 		}
 		
 };
-class Educational_Departement: public Health_Departement
+class Educational_Department: public Health_Department
 {
 	private:
 		int students;
 		int teachers;
 		int no_of_classrooms;
 		public:
-			Educational_Departement(int students, int teachers, int no_of_classrooms, int level, int employees, double salaries){
+			Educational_Department(int students, int teachers, int no_of_classrooms, int level, int employees, double salaries){
 				this->students=students;
 				this->teachers=teachers;
 				this->no_of_classrooms=no_of_classrooms;
@@ -220,10 +221,10 @@ class Educational_Departement: public Health_Departement
 			
 		
 };
-class Finance_Departement
+class Finance_Department
 {
 };
-class Transport_Departement
+class Transport_Department
 {
 	private:
 		int no_of_electricvehicles;
@@ -231,7 +232,7 @@ class Transport_Departement
 		int no_of_dieselvehicles;
 		int trafficlights;
 		public:
-			Transport_Departement(int no_of_electricvehicles, int no_of_petrolvehicles, int no_of_dieselvehicles, int trafficlights){
+			Transport_Department(int no_of_electricvehicles, int no_of_petrolvehicles, int no_of_dieselvehicles, int trafficlights){
 				this->no_of_electricvehicles=no_of_electricvehicles;
 				this->no_of_petrolvehicles=no_of_petrolvehicles;
 				this->no_of_dieselvehicles=no_of_dieselvehicles;
@@ -242,7 +243,7 @@ class Transport_Departement
 		}
 			
 };
-class Construction_Departement:virtual public Health_Departement
+class Construction_Department:virtual public Health_Department
 {
 	private:
 		int no_of_resedentialbuildings;
@@ -250,8 +251,8 @@ class Construction_Departement:virtual public Health_Departement
 		int no_of_roads;
 		int no_of_parks;
 		public:
-			Construction_Departement(int no_of_buildings, int no_of_roads , int employees, int no_of_industrialbuildings, int no_of_parks){
-				this-> no_of_buildings=no_of_buildings;
+			Construction_Department(int no_of_resedentialbuildings, int no_of_roads , int employees, int no_of_industrialbuildings, int no_of_parks , int ni_of_roads){
+				this-> no_of_industrialbuildings=no_of_industrialbuildings;
 				this->no_of_roads= no_of_roads;
 				this->employees=employees;
 				this->no_of_parks=no_of_parks;
@@ -260,7 +261,7 @@ class Construction_Departement:virtual public Health_Departement
 		void update(){
 		}
 };
-class Police_Departement:virtual public Health_Departement
+class Police_Department:virtual public Health_Department
 {
 	
 	private:
