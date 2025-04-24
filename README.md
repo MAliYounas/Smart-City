@@ -296,13 +296,13 @@ class Maintainence_Department:virtual public Health_Department
 			
 				
 };
-class Environmental_Department
+class Environmental_Department: virtual public Health_Department
 {
 	private:
 		int no_of_parks;
 		double per_of_renewableresources;
 		public:
-			Environmental_Department(int no_of_parks, double per_of_renewableresources, int level , int employees, double salaries):Health_department(level, employees, salaries){
+			Environmental_Department(int no_of_parks, double per_of_renewableresources, int level , int employees, double salaries):Health_Department(level, employees, salaries){
 				this->no_of_parks=no_of_parks;
 				this->per_of_renewableresources=per_of_renewableresources;
 			}
@@ -313,13 +313,13 @@ class Environmental_Department
 			
 };
 
-class Resource_Managment
+class Resource_Managment: virtual public Health_Department
 { 
 private:
 	int water_reserviors;
 	int power_plant;
 	public:
-		Resource_Managment(int water_reserviors, int power_plant, int level, int employees , double salaries):Health_department(level,employees ,salaries){
+		Resource_Managment(int water_reserviors, int power_plant, int level, int employees , double salaries):Health_Department(level,employees ,salaries){
 			this->water_reserviors=water_reserviors;
 			this->power_plant=power_plant;
 		}
