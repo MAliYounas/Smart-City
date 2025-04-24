@@ -9,7 +9,7 @@ using namespace std;
 string filepath1 = "initial";
 void beauty()
 {
-    cout << "\n\n*\n\n";
+    cout << "\n\n***************************************************************\n\n";
     return;
 }
 char menu_external()
@@ -188,31 +188,33 @@ class Health_Department
 		double salaries;
 	public:
 		Health_Department(int doctors, int employees, int no_of_beds, int nurses , double salaries){
-		this->	doctors=doctors;
-		this->	employees=employees;
+		this->doctors=doctors;
+		this->employees=employees;
 		this->no_of_beds=no_of_beds;
 		this->nurses=nurses;
 		this->salaries=salaries;
 		}
-		
+		Health_Department(int level, int employees, double salaries){
+			this->employees=employees;
+			this->level=level;
+			this->salaries=salaries;
+		}
 		void update(){
 		}
 		
 };
-class Educational_Department: public Health_Department
+class Educational_Department:virtual public Health_Department
 {
 	private:
 		int students;
 		int teachers;
 		int no_of_classrooms;
 		public:
-			Educational_Department(int students, int teachers, int no_of_classrooms, int level, int employees, double salaries){
+			Educational_Department(int students, int teachers, int no_of_classrooms,int level, int employees, double salaries):Health_Department( level, employees, salaries){
 				this->students=students;
 				this->teachers=teachers;
 				this->no_of_classrooms=no_of_classrooms;
-				this->level=level;
-				this->employees=employees;
-				this->salaries=salaries;
+				
 			}
 			
 			void update(){
@@ -223,6 +225,8 @@ class Educational_Department: public Health_Department
 };
 class Finance_Department
 {
+	
+		
 };
 class Transport_Department
 {
@@ -251,10 +255,9 @@ class Construction_Department:virtual public Health_Department
 		int no_of_roads;
 		int no_of_parks;
 		public:
-			Construction_Department(int no_of_resedentialbuildings, int no_of_roads , int employees, int no_of_industrialbuildings, int no_of_parks , int ni_of_roads){
+			Construction_Department(int no_of_resedentialbuildings, int no_of_roads ,  int no_of_industrialbuildings, int no_of_parks ,int employees):Health_Department( 0,employees,0.0){
 				this-> no_of_industrialbuildings=no_of_industrialbuildings;
 				this->no_of_roads= no_of_roads;
-				this->employees=employees;
 				this->no_of_parks=no_of_parks;
 				this->no_of_resedentialbuildings=no_of_resedentialbuildings;
 			}	
@@ -265,18 +268,66 @@ class Police_Department:virtual public Health_Department
 {
 	
 	private:
+		int no_of_stations;
+		
+		public:
+			Police_Department(int no_of_stations, int employees, int level, double salaries):Health_Department( level, employees, salaries){
+				this->no_of_stations=no_of_stations;	
+			}
+			void update(){
+				
+			}	
 			
 };
-class Maintainence_Departement
+class Maintainence_Department:virtual public Health_Department
 {
-	
+	private:
+	int pending_requests;
+	int completed_tasks;
+	public:
+		Maintainence_Department(int pending_requests, int completed_tasks, int level, int employees, double salaries):Health_Department( level, employees, salaries)
+		{
+			this->pending_requests=pending_requests;
+			this->completed_tasks=completed_tasks;
+			}
+			
+			void update(){
+			}
+			
+				
 };
-class Environmental_Departement
+class Environmental_Department
 {
+	private:
+		int no_of_parks;
+		double per_of_renewableresources;
+		public:
+			Environmental_Department(int no_of_parks, double per_of_renewableresources, int level , int employees, double salaries):Health_department(level, employees, salaries){
+				this->no_of_parks=no_of_parks;
+				this->per_of_renewableresources=per_of_renewableresources;
+			}
+			
+				void update(){
+			}
+			
+			
 };
 
 class Resource_Managment
-{
+{ 
+private:
+	int water_reserviors;
+	int power_plant;
+	public:
+		Resource_Managment(int water_reserviors, int power_plant, int level, int employees , double salaries):Health_department(level,employees ,salaries){
+			this->water_reserviors=water_reserviors;
+			this->power_plant=power_plant;
+		}
+		
+		void update(){
+		}
+		
+	
 };
 void Mayor()
 {
