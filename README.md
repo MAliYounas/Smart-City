@@ -96,10 +96,7 @@ array<string, 2> login(){
         return just;
         
 }
-void Setup()
-{
-			
-}
+
 void sign_up()
 {
     string name;
@@ -187,7 +184,8 @@ class Health_Department
 		int employees;
 		double salaries;
 	public:
-		Health_Department(int doctors, int employees, int no_of_beds, int nurses , double salaries){
+		Health_Department(int level, double salaries, int employees,int doctors, int no_of_beds, int nurses){
+        this->level=level;
 		this->doctors=doctors;
 		this->employees=employees;
 		this->no_of_beds=no_of_beds;
@@ -210,7 +208,7 @@ class Educational_Department:virtual public Health_Department
 		int teachers;
 		int no_of_classrooms;
 		public:
-			Educational_Department(int students, int teachers, int no_of_classrooms,int level, int employees, double salaries):Health_Department( level, employees, salaries){
+			Educational_Department(int level, double salaries, int employees,int students, int teachers, int no_of_classrooms):Health_Department( level, employees, salaries){
 				this->students=students;
 				this->teachers=teachers;
 				this->no_of_classrooms=no_of_classrooms;
@@ -228,7 +226,7 @@ class Finance_Department
 	
 		
 };
-class Transport_Department
+class Transport_Department:virtual public Health_Department
 {
 	private:
 		int no_of_electricvehicles;
@@ -236,7 +234,7 @@ class Transport_Department
 		int no_of_dieselvehicles;
 		int trafficlights;
 		public:
-			Transport_Department(int no_of_electricvehicles, int no_of_petrolvehicles, int no_of_dieselvehicles, int trafficlights){
+			Transport_Department(int level, double salaries, int employees,int no_of_electricvehicles, int no_of_petrolvehicles, int no_of_dieselvehicles, int trafficlights):Health_Department( level, employees, salaries){
 				this->no_of_electricvehicles=no_of_electricvehicles;
 				this->no_of_petrolvehicles=no_of_petrolvehicles;
 				this->no_of_dieselvehicles=no_of_dieselvehicles;
@@ -255,7 +253,7 @@ class Construction_Department:virtual public Health_Department
 		int no_of_roads;
 		int no_of_parks;
 		public:
-			Construction_Department(int no_of_resedentialbuildings, int no_of_roads ,  int no_of_industrialbuildings, int no_of_parks ,int employees):Health_Department( 0,employees,0.0){
+			Construction_Department(int level, double salaries, int employees,int no_of_resedentialbuildings, int no_of_roads ,  int no_of_industrialbuildings, int no_of_parks ):Health_Department( level, employees, salaries){
 				this-> no_of_industrialbuildings=no_of_industrialbuildings;
 				this->no_of_roads= no_of_roads;
 				this->no_of_parks=no_of_parks;
@@ -271,7 +269,7 @@ class Police_Department:virtual public Health_Department
 		int no_of_stations;
 		
 		public:
-			Police_Department(int no_of_stations, int employees, int level, double salaries):Health_Department( level, employees, salaries){
+			Police_Department(int level, double salaries, int employees,int no_of_stations):Health_Department( level, employees, salaries){
 				this->no_of_stations=no_of_stations;	
 			}
 			void update(){
@@ -285,7 +283,7 @@ class Maintainence_Department:virtual public Health_Department
 	int pending_requests;
 	int completed_tasks;
 	public:
-		Maintainence_Department(int pending_requests, int completed_tasks, int level, int employees, double salaries):Health_Department( level, employees, salaries)
+		Maintainence_Department(int level, double salaries, int employees,int pending_requests, int completed_tasks):Health_Department( level, employees, salaries)
 		{
 			this->pending_requests=pending_requests;
 			this->completed_tasks=completed_tasks;
@@ -300,11 +298,11 @@ class Environmental_Department: virtual public Health_Department
 {
 	private:
 		int no_of_parks;
-		double per_of_renewableresources;
+		double renewableresources;
 		public:
-			Environmental_Department(int no_of_parks, double per_of_renewableresources, int level , int employees, double salaries):Health_Department(level, employees, salaries){
+			Environmental_Department(int level, double salaries, int employees,int no_of_parks, double renewableresources):Health_Department(level, employees, salaries){
 				this->no_of_parks=no_of_parks;
-				this->per_of_renewableresources=per_of_renewableresources;
+				this->renewableresources=renewableresources;
 			}
 			
 				void update(){
@@ -319,7 +317,7 @@ private:
 	int water_reserviors;
 	int power_plant;
 	public:
-		Resource_Managment(int water_reserviors, int power_plant, int level, int employees , double salaries):Health_Department(level,employees ,salaries){
+		Resource_Managment(int level, double salaries, int employees,int water_reserviors, int power_plant):Health_Department(level,employees ,salaries){
 			this->water_reserviors=water_reserviors;
 			this->power_plant=power_plant;
 		}
@@ -329,8 +327,71 @@ private:
 		
 	
 };
+class Overall_Status{
+    float satisfaction_level;
+    float minimum_salaries;
+    float Total_Resorces;
+    int population;
+    int green_levels;
+    float  sustainable_living;
+    float  clean_energy;
+    public:
+};
+int interlinking_menu(){
+    ask:
+    int option;
+    beauty();
+    cout<<"\n1. SEE HOW OVERALL CITY IS DOING."<<endl;
+    cout<<"\n2. EXERCISE YOUR POWERS TO MAKE CHANGES IN DEPARTMENTS"<<endl;
+    cout<<"\n3. COLLABORATE IN VIRTUAL CLIMATE SUMMIT."<<endl;
+    cout<<"\n4. EXIT."<<endl;
+    cout<<"\nENTER : ";
+    cin>>option;
+    if (option<1 || option>4)
+    {
+        cout << "\nInvalid input try again <3" << endl;
+        goto ask;
+    }
+    beauty();
+    return(option);
+}
+void Setup()
+{
+    bool runnning=true;
+    int option_interlinking_menu;
+    while(runnning){
+        option_interlinking_menu=interlinking_menu();
+        switch (option_interlinking_menu)
+        {
+        case 1:{
+            
+            break;
+        }
+        case 2:{
+            
+            break;
+        }
+        case 3:{
+            
+            break;
+        }
+        case 4:{
+            
+            break;
+        }
+
+    }
+			
+    }
+}
 void Mayor()
 {
+    int option;
+    beauty();
+    cout<<"\n                       WELCOME SIR BACK TO THE OFFICE .<3"<<endl;
+    cout<<"\nMAY YOU SERVVE THE PEOPLE OF CITY AND MAKE DESICIONS ACCORDING TO THE WELFARE OF SOCIETY"<<endl;
+    beauty();
+    Setup();
 }
 
 int main()
