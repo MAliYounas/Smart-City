@@ -7,14 +7,14 @@
 #include<array>
 using namespace std;
 string filepath1 = "initial";
+string filepath2 = "initial";
 void beauty()
 {
-    cout << "\n\n***************************************************************\n\n";
+    cout << "\n\n******************************************************************************\n\n";
     return;
 }
 char menu_external()
 {
-
 ask:
     char option_exter;
     cout << endl
@@ -328,6 +328,7 @@ private:
 	
 };
 class Overall_Status{
+    public:
     float satisfaction_level;
     float minimum_salaries;
     float Total_Resorces;
@@ -336,6 +337,30 @@ class Overall_Status{
     float  sustainable_living;
     float  clean_energy;
     public:
+    Overall_Status(float satisfaction_level,float minimum_salaries,float Total_Resorces,int population,int green_levels,float  sustainable_living,float  clean_energy){
+        this->satisfaction_level=satisfaction_level;
+        this->minimum_salaries=minimum_salaries;
+        this->Total_Resorces=Total_Resorces;
+        this->population=population;
+        this->green_levels=green_levels;
+        this->sustainable_living=sustainable_living;
+        this->clean_energy=clean_energy;              
+    }
+    void Display(){
+        beauty();
+        cout<<"\n                           OVERALL STATUS                            "<<endl<<endl;
+        cout<<"\n                                                                        TOTAL RESOURCES : "<<Total_Resorces<<"$"<<endl;
+        cout<<"\nSATISFACTION LEVEL : "<<satisfaction_level<<"%"<<endl;
+        cout<<"\nMINIMUM SALARY : "<<minimum_salaries<<"$"<<endl;
+        cout<<"\nPOPULATION : "<<population<<endl;
+        cout<<"\nGREEEN LEVELS : "<<green_levels<<"%"<<endl;
+        cout<<"\nSASTAINABLE LIVING :"<<sustainable_living<<endl;
+        cout<<"\nCLEAN ENERGY :"<<clean_energy<<endl;
+        beauty();
+
+
+
+    }
 };
 int interlinking_menu(){
     ask:
@@ -355,6 +380,31 @@ int interlinking_menu(){
     beauty();
     return(option);
 }
+
+int excercising_powers_menu(){
+    int option;
+    ask:
+    beauty();
+    cout<<"\n                          YOU CAN MAKE CHANGES IN THE RESPECTIVE DEPARTMENTS<3"<<endl;
+    cout<<"\n1.Environment Department"<<endl;    
+    cout<<"\n2.Construction Department"<<endl;    
+    cout<<"\n3.Maintenance Department"<<endl;    
+    cout<<"\n4.Finance Department"<<endl;
+    cout<<"\n5.Education Department"<<endl;
+    cout<<"\n6.Health Department"<<endl;
+    cout<<"\n7.Transport Department"<<endl;
+    cout<<"\n8.Police Department"<<endl;
+    cout<<"\n9.Exit"<<endl;
+    cin>>option;
+    if (option<1 || option>9)
+    {
+        cout << "\nInvalid input try again <3" << endl;
+        goto ask;
+    }
+    beauty();
+    return(option);
+
+}
 void Setup()
 {
     bool runnning=true;
@@ -364,12 +414,60 @@ void Setup()
         switch (option_interlinking_menu)
         {
         case 1:{
+            fstream my_file2;
+            my_file2.open(filepath2,ios::in);
+            if(!my_file2.is_open()){
+               cout<<"Failed to Open File "<<endl;
+            }
+            else{
+                if(my_file2.peek() == EOF){
+                    Overall_Status city(0,0,100000,0,0,0,0);
+                    city.Display();
+
+            }
+            my_file2.close();
+
             
             break;
-        }
+        }}
         case 2:{
+            int option;
+            option=excercising_powers_menu();
+            switch (option)
+            {
+            case 1:{
+                
+                break;
+            }
+            case 2:{
+                
+                break;
+            }
+            case 3:{
+                
+                break;
+            }
+            case 5:{
+                
+                break;
+            }
+            case 6:{
+                
+                break;
+            }
+            case 7:{
+                
+                break;
+            }
+            case 8:{
+                
+                break;
+            }
+            case 9:{
+                
+                break;
+            }
             
-            break;
         }
         case 3:{
             
@@ -382,6 +480,7 @@ void Setup()
 
     }
 			
+    }
     }
 }
 void Mayor()
@@ -412,6 +511,13 @@ int main()
                 cout<<"Failed to Open File "<<endl;
              }
              my_file1.close();
+             filepath2=(user_data[0] +"_Overall_status.txt");
+             fstream my_file2;
+             my_file2.open(filepath2,ios::app);
+             if(!my_file2.is_open()){
+                cout<<"Failed to Open File "<<endl;
+             }
+             my_file2.close();
 
             close_external=false;
             break;
