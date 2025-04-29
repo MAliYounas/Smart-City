@@ -198,7 +198,61 @@ class Health_Department
 			this->salaries=salaries;
 		}
 		void update(){
+            beauty();
+            cout<<"\n                   What do you want to update in Health Department?"<<endl;
+            cout<<"1.Doctors"<<endl;
+            cout<<"2.Nurses"<<endl;
+            cout<<"3.No of beds"<<endl;
+            cout<<"4.Salaries"<<endl;
+            cout<<"5.Employees"<<endl;
+            cout<<"6.Level"<<endl;
+            cout<<"7.Exit"<<endl;
+            beauty();
+            cout<<"Enter the option : ";
+            int option;
+            cin>>option;
+            if(option ==1){
+                cout<<"Enter the new number of doctors : ";
+                cin>>doctors;
+            }
+            else if(option==2){
+                cout<<"Enter the new number of nurses : ";
+                cin>>nurses;
+            }
+            else if(option==3){
+                cout<<"Enter the new number of beds : ";
+                cin>>no_of_beds;
+            }
+            else if(option==4){
+                cout<<"Enter the new salaries : ";
+                cin>>salaries;
+            }
+            else if(option==5){
+                cout<<"Enter the new number of employees : ";
+                cin>>employees;
+            }
+            else if(option==6){
+                cout<<"Enter the new level : ";
+                cin>>level;
+            }
+            else if(option==7){
+                return;
+            }
+            else{
+                cout<<"Invalid input"<<endl;
+            }
+            beauty();
+            cout<<"Updated successfully"<<endl;
+            beauty();
 		}
+        void display_new(){
+            cout<<"Level : "<<level<<endl;
+            cout<<"Employees : "<<employees<<endl;
+            cout<<"Salaries : "<<salaries<<endl;
+            cout<<"Doctors : "<<doctors<<endl;
+            cout<<"Nurses : "<<nurses<<endl;
+            cout<<"No of beds : "<<no_of_beds<<endl;
+        }
 		
 };
 class Educational_Department:virtual public Health_Department
@@ -216,7 +270,66 @@ class Educational_Department:virtual public Health_Department
 			}
 			
 			void update(){
+                beauty();
+                cout<<"\n               What do you want to update in Educational Department?"<<endl;
+                cout<<"1.Students"<<endl;
+                cout<<"2.Teachers"<<endl;
+                cout<<"3.No of classrooms"<<endl;
+                cout<<"4.Salaries"<<endl;
+                cout<<"5.Employees"<<endl;
+                cout<<"6.Level"<<endl;
+                cout<<"7.Exit"<<endl;
+                beauty();
+                cout<<"Enter the option : ";
+                int option;
+                cin>>option;
+              switch (option)
+              {
+              case 1:
+                cout<<"Enter the new number of students : ";
+                cin>>students;
+                break;
+                case 2:
+                cout<<"Enter the new number of teachers: ";
+                cin>>teachers;
+                break;
+                case 3:
+                cout<<"Enter the new number of classrooms : ";
+                cin>>no_of_classrooms;
+                break;
+                case 4:
+                cout<<"Enter the new salaries : ";
+                cin>>salaries;
+                break;
+                case 5:
+                cout<<"Enter the new number of employees : ";
+                cin>>employees;
+                break;
+                case 6:
+                cout<<"Enter the new level : ";
+                cin>>level;
+                break;
+                case 7:
+                cout<<"Exit"<<endl;
+               return ;
+                break;
+                default:
+                cout<<"Invalid input"<<endl;
+                break;
+
+              }
+                beauty();
+                cout<<"Updated successfully"<<endl;
+                beauty();
 		}
+        void display_new(){
+            cout<<"Level : "<<level<<endl;
+            cout<<"Employees : "<<employees<<endl;
+            cout<<"Salaries : "<<salaries<<endl;
+            cout<<"Students : "<<students<<endl;
+            cout<<"Teachers : "<<teachers<<endl;
+            cout<<"No of classrooms : "<<no_of_classrooms<<endl;
+        }
 			
 			
 		
@@ -242,7 +355,72 @@ class Transport_Department:virtual public Health_Department
 				
 			}
 			void update(){
+                beauty();
+                cout<<"\n                   What do you want to update in Transport departement: ";
+                cout<<"1.No of electric vehicles"<<endl;
+                cout<<"2.No of petrol vehicles"<<endl;
+                cout<<"3.No of diesel vehicles"<<endl;
+                cout<<"4.Traffic lights"<<endl;
+                cout<<"5.Salaries"<<endl;
+                cout<<"6.Employees"<<endl;
+                cout<<"7.Level"<<endl;
+                cout<<"8.Exit"<<endl;
+                beauty();
+                int option;
+                cout<<"\nEnter the option : ";
+                cin>>option;
+                switch (option)
+                {
+                case 1:
+                cout<<"Enter the new number of electric vehicles : ";
+                cin>>no_of_electricvehicles;
+                break;
+                case 2:
+                cout<<"Enter the new number of petrol vehicles : ";
+                cin>>no_of_petrolvehicles;
+                break;
+                case 3:
+                cout<<"Enter the new number of diesel vehicles : ";
+                cin>>no_of_dieselvehicles;
+                break;
+                case 4:
+                cout<<"Enter the new number of traffic lights : ";
+                cin>>trafficlights;
+                break;
+                case 5:
+                cout<<"Enter the new salaries : ";
+                cin>>salaries;
+                break;
+                case 6:
+                cout<<"Enter the new number of employees: ";
+                cin>>employees;
+                break;
+                case 7:
+                cout<<"Enter the new level: ";
+                cin>>level;
+                break;
+                case 8:
+                cout<<"Exiting .....";
+                return;
+                break;
+                default:
+                cout<<"Invalid input"<<endl;
+                break;
+                }
+                beauty();
+                cout<<"Updated successfully"<<endl;
+                beauty();
 		}
+        void display_new(){
+            cout<<"Level : "<<level<<endl;
+            cout<<"Employees : "<<employees<<endl;
+            cout<<"Salaries : "<<salaries<<endl;
+            cout<<"No of electric vehicles : "<<no_of_electricvehicles<<endl;
+            cout<<"No of petrol vehicles : "<<no_of_petrolvehicles<<endl;
+            cout<<"No of diesel vehicles : "<<no_of_dieselvehicles<<endl;
+            cout<<"Traffic lights : "<<trafficlights<<endl;
+        }
+        
 			
 };
 class Construction_Department:virtual public Health_Department
@@ -260,7 +438,71 @@ class Construction_Department:virtual public Health_Department
 				this->no_of_resedentialbuildings=no_of_resedentialbuildings;
 			}	
 		void update(){
+            beauty();
+            cout<<"\n                   What do you want to update in Construction Department?"<<endl;
+            cout<<"1.No of resedential buildings"<<endl;
+            cout<<"2.No of industrial buildings"<<endl;
+            cout<<"3.No of roads"<<endl;
+            cout<<"4.No of parks"<<endl;
+            cout<<"5.Salaries"<<endl;
+            cout<<"6.Employees"<<endl;
+            cout<<"7.Level"<<endl;
+            cout<<"8.Exit"<<endl;
+            beauty();
+            int option;
+            cout<<"Enter the option : ";
+            cin>>option;
+            switch (option)
+            {
+                case 1:
+                cout<<"Enter the new number of resedential buildings : ";
+                cin>>no_of_resedentialbuildings;
+                break;
+                case 2:
+                cout<<"Enter the new number of industrial buildings : ";
+                cin>>no_of_industrialbuildings;
+                break;
+                case 3:
+                cout<<"Enter the new number of roads : ";
+                cin>>no_of_roads;
+                break;
+                case 4:
+                cout<<"Enter the new number of parks : ";
+                cin>>no_of_parks;
+                break;
+                case 5:
+                cout<<"Enter the new salaries : ";
+                cin>>salaries;
+                break;
+                case 6:
+                cout<<"Enter the new number of employees : ";
+                cin>>employees;
+                break;
+                case 7:
+                cout<<"Enter the new level : ";
+                cin>>level;
+                break;
+                case 8:
+                cout<<"Exiting .....";
+                return;
+                break;
+                default:
+                cout<<"Invalid input"<<endl;
+                break;
 		}
+            beauty();
+        cout<<"Updated successfully"<<endl;
+        beauty();
+        }
+        void display_new(){
+            cout<<"Level : "<<level<<endl;
+            cout<<"Employees : "<<employees<<endl;
+            cout<<"Salaries : "<<salaries<<endl;
+            cout<<"No of resedential buildings : "<<no_of_resedentialbuildings<<endl;
+            cout<<"No of industrial buildings : "<<no_of_industrialbuildings<<endl;
+            cout<<"No of roads : "<<no_of_roads<<endl;
+            cout<<"No of parks : "<<no_of_parks<<endl;
+        }
 };
 class Police_Department:virtual public Health_Department
 {
@@ -273,8 +515,54 @@ class Police_Department:virtual public Health_Department
 				this->no_of_stations=no_of_stations;	
 			}
 			void update(){
+                beauty();
+                cout<<"\n               What do you want to update in Police department: ";
+                cout<<"1.No of stations"<<endl;
+                cout<<"2.Salaries"<<endl;
+                cout<<"3.Employees"<<endl;
+                cout<<"4.Level"<<endl;
+                cout<<"5.Exit"<<endl;
+                beauty();
+                int option;
+                cout<<"Enter the option : ";
+                cin>>option;
+                switch (option)
+                {
+                    case 1:
+                    cout<<"Enter the new number of stations : ";
+                    cin>>no_of_stations;
+                    break;
+                    case 2:
+                    cout<<"Enter the new salaries : ";
+                    cin>>salaries;
+                    break;
+                    case 3:
+                    cout<<"Enter the new number of employees : ";
+                    cin>>employees;
+                    break;
+                    case 4:
+                    cout<<"Enter the new level : ";
+                    cin>>level;
+                    break;
+                    case 5:
+                    cout<<"Exiting .....";
+                    return;
+                    break;
+                    default:
+                    cout<<"Invalid input"<<endl;
+                    break;
 				
-			}	
+			}
+            beauty();
+            cout<<"Updated successfully"<<endl;
+            beauty();
+        }
+        void display_new(){
+            cout<<"Level : "<<level<<endl;
+            cout<<"Employees : "<<employees<<endl;
+            cout<<"Salaries : "<<salaries<<endl;
+            cout<<"No of stations : "<<no_of_stations<<endl;
+        }  
 			
 };
 class Maintainence_Department:virtual public Health_Department
@@ -290,7 +578,59 @@ class Maintainence_Department:virtual public Health_Department
 			}
 			
 			void update(){
+                beauty();
+                cout<<"\n                   What do you want to update in Maintainence department: ";
+                cout<<"1.Pending requests"<<endl;
+                cout<<"2.Completed tasks"<<endl;
+                cout<<"3.Salaries"<<endl;
+                cout<<"4.Employees"<<endl;
+                cout<<"5.Level"<<endl;
+                cout<<"6.Exit"<<endl;
+                beauty();
+                int option;
+                cout<<"Enter the option : ";
+                cin>>option;
+                switch (option)
+                {
+                    case 1:
+                    cout<<"Enter the new number of pending requests : ";
+                    cin>>pending_requests;
+                    break;
+                    case 2:
+                    cout<<"Enter the new number of completed tasks : ";
+                    cin>>completed_tasks;
+                    break;
+                    case 3:
+                    cout<<"Enter the new salaries : ";
+                    cin>>salaries;
+                    break;
+                    case 4:
+                    cout<<"Enter the new number of employees : ";
+                    cin>>employees;
+                    break;
+                    case 5:
+                    cout<<"Enter the new level : ";
+                    cin>>level;
+                    break;
+                    case 6:
+                    cout<<"Exiting .....";
+                    return;
+                    break;
+                    default:
+                    cout<<"Invalid input"<<endl;
+                    break;
 			}
+            beauty();
+            cout<<"Updated successfully"<<endl;
+            beauty();
+        }
+        void display_new(){
+            cout<<"Level : "<<level<<endl;
+            cout<<"Employees : "<<employees<<endl;
+            cout<<"Salaries : "<<salaries<<endl;
+            cout<<"Pending requests : "<<pending_requests<<endl;
+            cout<<"Completed tasks : "<<completed_tasks<<endl;
+        }
 			
 				
 };
@@ -306,7 +646,59 @@ class Environmental_Department: virtual public Health_Department
 			}
 			
 				void update(){
+                    beauty();
+                    cout<<"\n               What do you want to update in Enviornmental department: ";
+                    cout<<"1.No of parks"<<endl;
+                    cout<<"2.Renewable resources"<<endl;
+                    cout<<"3.Salaries"<<endl;
+                    cout<<"4.Employees"<<endl;
+                    cout<<"5.Level"<<endl;
+                    cout<<"6.Exit"<<endl;
+                    beauty();
+                    cout<<"Enter the option : ";
+                    int option;
+                    cin>>option;
+                    switch (option)
+                    {
+                        case 1:
+                        cout<<"Enter the new number of parks : ";
+                        cin>>no_of_parks;
+                        break;
+                        case 2:
+                        cout<<"Enter the new renewable resources : ";
+                        cin>>renewableresources;
+                        break;
+                        case 3:
+                        cout<<"Enter the new salaries : ";
+                        cin>>salaries;
+                        break;
+                        case 4:
+                        cout<<"Enter the new number of employees : ";
+                        cin>>employees;
+                        break;
+                        case 5:
+                        cout<<"Enter the new level : ";
+                        cin>>level;
+                        break;
+                        case 6:
+                        cout<<"Exiting .....";
+                        return;
+                        break;
+                        default:
+                        cout<<"Invalid input"<<endl;
+                        break;
 			}
+            beauty();
+            cout<<"Updated successfully"<<endl;
+            beauty();
+        }
+        void display_new(){
+            cout<<"Level : "<<level<<endl;
+            cout<<"Employees : "<<employees<<endl;
+            cout<<"Salaries : "<<salaries<<endl;
+            cout<<"No of parks : "<<no_of_parks<<endl;
+            cout<<"Renewable resources : "<<renewableresources<<endl;
+        }
 			
 			
 };
@@ -323,7 +715,59 @@ private:
 		}
 		
 		void update(){
+            beauty();
+            cout<<"\n                   What do you want to update in Resource Managment department: ";
+            cout<<"1.Water reserviors"<<endl;
+            cout<<"2.Power plant"<<endl;
+            cout<<"3.Salaries"<<endl;
+            cout<<"4.Employees"<<endl;
+            cout<<"5.Level"<<endl;
+            cout<<"6.Exit"<<endl;
+            beauty();
+            cout<<"Enter the option : ";
+            int option;
+            cin>>option;
+            switch (option)
+            {
+                case 1:
+                cout<<"Enter the new number of water reserviors : ";
+                cin>>water_reserviors;
+                break;
+                case 2:
+                cout<<"Enter the new number of power plants : ";
+                cin>>power_plant;
+                break;
+                case 3:
+                cout<<"Enter the new salaries : ";
+                cin>>salaries;
+                break;
+                case 4:
+                cout<<"Enter the new number of employees : ";
+                cin>>employees;
+                break;
+                case 5:
+                cout<<"Enter the new level : ";
+                cin>>level;
+                break;
+                case 6:
+                cout<<"Exiting .....";
+                return;
+                break;
+                default:
+                cout<<"Invalid input"<<endl;
+                break;
 		}
+            beauty();
+        cout<<"Updated successfully"<<endl;
+        beauty();
+        }
+        void display_new (){
+            cout<<"Level : "<<level<<endl;
+            cout<<"Employees : "<<employees<<endl;
+            cout<<"Salaries : "<<salaries<<endl;
+            cout<<"Water reserviors : "<<water_reserviors<<endl;
+            cout<<"Power plant : "<<power_plant<<endl;
+        }
 		
 	
 };
