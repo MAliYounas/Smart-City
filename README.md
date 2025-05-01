@@ -6,8 +6,9 @@
 #include <ctime>
 #include<array>
 using namespace std;
-string filepath1 = "initial";
-string filepath2 = "initial";
+string filepath1 = "initial";//For login
+string filepath2 = "initial";//For Overall status
+string Username="initial";
 void beauty()
 {
     cout << "\n\n******************************************************************************\n\n";
@@ -173,6 +174,44 @@ ask:
     cout <<"THANKS FOR OPENNING AN ACCOUNT <3" << endl;
     beauty();
 }
+//Forward Declaration 
+class Health_Department{};
+class Overall_Status{
+    public:
+    float satisfaction_level;
+    float minimum_salaries;
+    float Total_Resources;
+    int population;
+    int green_levels;
+    float  sustainable_living;
+    float  clean_energy;
+    public:
+    Overall_Status(float satisfaction_level,float minimum_salaries,float Total_Resources,int population,int green_levels,float  sustainable_living,float  clean_energy){
+        this->satisfaction_level=satisfaction_level;
+        this->minimum_salaries=minimum_salaries;
+        this->Total_Resources=Total_Resources;
+        this->population=population;
+        this->green_levels=green_levels;
+        this->sustainable_living=sustainable_living;
+        this->clean_energy=clean_energy;              
+    }
+    void Display(){
+        beauty();
+        cout<<"\n                           OVERALL STATUS                            "<<endl<<endl;
+        cout<<"\n                                                                        TOTAL RESOURCES : "<<Total_Resources<<"$"<<endl;
+        cout<<"\nSATISFACTION LEVEL : "<<satisfaction_level<<"%"<<endl;
+        cout<<"\nMINIMUM SALARY : "<<minimum_salaries<<"$"<<endl;
+        cout<<"\nPOPULATION : "<<population<<endl;
+        cout<<"\nGREEEN LEVELS : "<<green_levels<<"%"<<endl;
+        cout<<"\nSASTAINABLE LIVING :"<<sustainable_living<<endl;
+        cout<<"\nCLEAN ENERGY :"<<clean_energy<<endl;
+        beauty();
+
+
+
+    }
+    friend class Health_Department;
+};
 class Health_Department
 {
 	private:
@@ -197,62 +236,171 @@ class Health_Department
 			this->level=level;
 			this->salaries=salaries;
 		}
-		void update(){
-            beauty();
-            cout<<"\n                   What do you want to update in Health Department?"<<endl;
-            cout<<"1.Doctors"<<endl;
-            cout<<"2.Nurses"<<endl;
-            cout<<"3.No of beds"<<endl;
-            cout<<"4.Salaries"<<endl;
-            cout<<"5.Employees"<<endl;
-            cout<<"6.Level"<<endl;
-            cout<<"7.Exit"<<endl;
-            beauty();
-            cout<<"Enter the option : ";
-            int option;
-            cin>>option;
-            if(option ==1){
-                cout<<"Enter the new number of doctors : ";
-                cin>>doctors;
+        void update(Overall_Status & status) {
+    beauty();
+    cout << "\n========= Health Department Update Menu =========\n";
+    cout << "1. Update Number of Doctors\n";
+    cout << "2. Update Number of Nurses\n";
+    cout << "3. Update Number of Beds\n";
+    cout << "4. Increase Salaries (by % for N employees)\n";
+    cout << "5. Update Number of Employees\n";
+    cout << "6. Upgrade Department Level\n";
+    cout << "7. Exit\n";
+    cout << "=================================================\n";
+    cout << "Enter your option (1-7): ";
+
+    int option;
+    cin >> option;
+
+    switch(option) {
+        case 1: {
+            int new_doctors;
+            cin >> new_doctors;
+            int increase = new_doctors - doctors;
+            if (increase > 0) {
+                float cost = increase * 5000;
+                if (status.Total_Resources >= cost) {
+                    doctors = new_doctors;
+                    status.Total_Resources -= cost;
+                    status.satisfaction_level += 0.001 * increase;
+                    cout << "✅ Doctors increased. Rs. " << cost << " spent.\n";
+                } else {
+                    cout << "❌ Not enough resources.\n";
+                }
+            } else {
+                doctors = new_doctors;
             }
-            else if(option==2){
-                cout<<"Enter the new number of nurses : ";
-                cin>>nurses;
-            }
-            else if(option==3){
-                cout<<"Enter the new number of beds : ";
-                cin>>no_of_beds;
-            }
-            else if(option==4){
-                cout<<"Enter the new salaries : ";
-                cin>>salaries;
-            }
-            else if(option==5){
-                cout<<"Enter the new number of employees : ";
-                cin>>employees;
-            }
-            else if(option==6){
-                cout<<"Enter the new level : ";
-                cin>>level;
-            }
-            else if(option==7){
-                return;
-            }
-            else{
-                cout<<"Invalid input"<<endl;
-            }
-            beauty();
-            cout<<"Updated successfully"<<endl;
-            beauty();
-		}
-        void display_new(){
-            cout<<"Level : "<<level<<endl;
-            cout<<"Employees : "<<employees<<endl;
-            cout<<"Salaries : "<<salaries<<endl;
-            cout<<"Doctors : "<<doctors<<endl;
-            cout<<"Nurses : "<<nurses<<endl;
-            cout<<"No of beds : "<<no_of_beds<<endl;
+            break;
         }
+
+        case 2: {
+            int new_nurses;
+            cin >> new_nurses;
+            int increase = new_nurses - nurses;
+            if (increase > 0) {
+                float cost = increase * 3000;
+                if (status.Total_Resources >= cost) {
+                    nurses = new_nurses;
+                    status.Total_Resources -= cost;
+                    status.satisfaction_level += 0.0008 * increase;
+                    cout << "✅ Nurses increased. Rs. " << cost << " spent.\n";
+                } else {
+                    cout << "❌ Not enough resources.\n";
+                }
+            } else {
+                nurses = new_nurses;
+            }
+            break;
+        }
+
+        case 3: {
+            int new_beds;
+            cin >> new_beds;
+            int increase = new_beds - no_of_beds;
+            if (increase > 0) {
+                float cost = increase * 2000;
+                if (status.Total_Resources >= cost) {
+                    no_of_beds = new_beds;
+                    status.Total_Resources -= cost;
+                    status.satisfaction_level += 0.0005 * increase;
+                    cout << "✅ Beds increased. Rs. " << cost << " spent.\n";
+                } else {
+                    cout << "❌ Not enough resources.\n";
+                }
+            } else {
+                no_of_beds = new_beds;
+            }
+            break;
+        }
+
+        case 4: {
+            double percent;
+            int num_employees;
+            cin >> num_employees;
+            if (num_employees > employees) {
+                cout << "❌ Error: Number exceeds total employees.\n";
+                break;
+            }
+            cin >> percent;
+
+            double individual_salary = salaries / employees;
+            double increment_per_person = individual_salary * percent / 100.0;
+            double total_increment = increment_per_person * num_employees;
+
+            if (status.Total_Resources >= total_increment) {
+                salaries += total_increment;
+                status.Total_Resources -= total_increment;
+                status.satisfaction_level += 0.002 * num_employees;
+                cout << "✅ Salaries increased. Rs. " << total_increment << " deducted from resources.\n";
+            } else {
+                cout << "❌ Not enough resources.\n";
+            }
+            break;
+        }
+
+        case 5: {
+            int new_employees;
+            cin >> new_employees;
+            int increase = new_employees - employees;
+            float cost = (increase > 0) ? increase * 4000 : 0;
+
+            if (increase <= 0 || status.Total_Resources >= cost) {
+                employees = new_employees;
+                if (increase > 0) {
+                    status.Total_Resources -= cost;
+                    status.satisfaction_level += 0.001 * increase;
+                    cout << "✅ Employees increased. Rs. " << cost << " spent.\n";
+                }
+                if (employees > 0)
+                    status.minimum_salaries = salaries / employees;
+            } else {
+                cout << "❌ Not enough resources.\n";
+            }
+            break;
+        }
+
+        case 6: {
+            int new_level;
+            cin >> new_level;
+            int increase = new_level - level;
+            float cost = increase * 10000;
+
+            if (increase > 0 && status.Total_Resources >= cost) {
+                level = new_level;
+                status.Total_Resources -= cost;
+                status.satisfaction_level += 0.002 * increase;
+                status.sustainable_living += 0.01 * increase;
+                status.clean_energy += 0.01 * increase;
+                cout << "✅ Level upgraded. Rs. " << cost << " spent.\n";
+            } else if (increase <= 0) {
+                level = new_level;
+                cout << "Department downgraded or same.\n";
+            } else {
+                cout << "❌ Not enough resources.\n";
+            }
+            break;
+        }
+
+        case 7:
+            cout << "Exiting update menu...\n";
+            return;
+
+        default:
+            cout << "Invalid input.\n";
+            return;
+    }
+
+    status.satisfaction_level = max(0.0f, min(1.0f, status.satisfaction_level));
+    status.sustainable_living = max(0.0f, min(1.0f, status.sustainable_living));
+    status.clean_energy = max(0.0f, min(1.0f, status.clean_energy));
+
+    beauty();
+    cout << "✅ Update completed successfully!\n";
+    beauty();
+}
+
+
+        
 		
 };
 class Educational_Department:virtual public Health_Department
@@ -269,67 +417,161 @@ class Educational_Department:virtual public Health_Department
 				
 			}
 			
-			void update(){
+            void update(Overall_Status &status) {
                 beauty();
-                cout<<"\n               What do you want to update in Educational Department?"<<endl;
-                cout<<"1.Students"<<endl;
-                cout<<"2.Teachers"<<endl;
-                cout<<"3.No of classrooms"<<endl;
-                cout<<"4.Salaries"<<endl;
-                cout<<"5.Employees"<<endl;
-                cout<<"6.Level"<<endl;
-                cout<<"7.Exit"<<endl;
-                beauty();
-                cout<<"Enter the option : ";
+                cout << "\n========= Educational Department Update Menu =========\n";
+                cout << "1. Update Number of Students\n";
+                cout << "2. Update Number of Teachers\n";
+                cout << "3. Update Number of Classrooms\n";
+                cout << "4. Increase Salaries (by % for N employees)\n";
+                cout << "5. Update Number of Employees\n";
+                cout << "6. Upgrade Department Level\n";
+                cout << "7. Exit\n";
+                cout << "======================================================\n";
+                cout << "Enter your option (1-7): ";
+        
                 int option;
-                cin>>option;
-              switch (option)
-              {
-              case 1:
-                cout<<"Enter the new number of students : ";
-                cin>>students;
-                break;
-                case 2:
-                cout<<"Enter the new number of teachers: ";
-                cin>>teachers;
-                break;
-                case 3:
-                cout<<"Enter the new number of classrooms : ";
-                cin>>no_of_classrooms;
-                break;
-                case 4:
-                cout<<"Enter the new salaries : ";
-                cin>>salaries;
-                break;
-                case 5:
-                cout<<"Enter the new number of employees : ";
-                cin>>employees;
-                break;
-                case 6:
-                cout<<"Enter the new level : ";
-                cin>>level;
-                break;
-                case 7:
-                cout<<"Exit"<<endl;
-               return ;
-                break;
-                default:
-                cout<<"Invalid input"<<endl;
-                break;
-
-              }
+                cin >> option;
+        
+                switch(option) {
+                    case 1: {
+                        int new_students;
+                        cin >> new_students;
+                        int increase = new_students - students;
+                        float cost = (increase > 0) ? increase * 1000 : 0;
+                        if (increase <= 0 || status.Total_Resources >= cost) {
+                            students = new_students;
+                            if (increase > 0) {
+                                status.Total_Resources -= cost;
+                                status.satisfaction_level += 0.0005f * increase;
+                                cout << "✅ Students increased. Rs. " << cost << " spent.\n";
+                            }
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+        
+                    case 2: {
+                        int new_teachers;
+                        cin >> new_teachers;
+                        int increase = new_teachers - teachers;
+                        float cost = (increase > 0) ? increase * 6000 : 0;
+                        if (increase <= 0 || status.Total_Resources >= cost) {
+                            teachers = new_teachers;
+                            if (increase > 0) {
+                                status.Total_Resources -= cost;
+                                status.satisfaction_level += 0.001f * increase;
+                                cout << "✅ Teachers increased. Rs. " << cost << " spent.\n";
+                            }
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+        
+                    case 3: {
+                        int new_rooms;
+                        cin >> new_rooms;
+                        int increase = new_rooms - no_of_classrooms;
+                        float cost = (increase > 0) ? increase * 8000 : 0;
+                        if (increase <= 0 || status.Total_Resources >= cost) {
+                            no_of_classrooms = new_rooms;
+                            if (increase > 0) {
+                                status.Total_Resources -= cost;
+                                status.satisfaction_level += 0.001f * increase;
+                                cout << "✅ Classrooms increased. Rs. " << cost << " spent.\n";
+                            }
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+        
+                    case 4: {
+                        double percent;
+                        int num_employees;
+                        cin >> num_employees;
+                        if (num_employees > employees) {
+                            cout << "❌ Error: Number exceeds total employees.\n";
+                            break;
+                        }
+                        cin >> percent;
+                        double individual_salary = (employees > 0) ? salaries / employees : 0;
+                        double increment_per_person = individual_salary * percent / 100.0;
+                        double total_increment = increment_per_person * num_employees;
+        
+                        if (status.Total_Resources >= total_increment) {
+                            salaries += total_increment;
+                            status.Total_Resources -= total_increment;
+                            status.satisfaction_level += 0.002f * num_employees;
+                            cout << "✅ Salaries increased. Rs. " << total_increment << " deducted from resources.\n";
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+        
+                    case 5: {
+                        int new_employees;
+                        cin >> new_employees;
+                        int increase = new_employees - employees;
+                        float cost = (increase > 0) ? increase * 4000 : 0;
+        
+                        if (increase <= 0 || status.Total_Resources >= cost) {
+                            employees = new_employees;
+                            if (increase > 0) {
+                                status.Total_Resources -= cost;
+                                status.satisfaction_level += 0.001f * increase;
+                                cout << "✅ Employees increased. Rs. " << cost << " spent.\n";
+                            }
+                            if (employees > 0)
+                                status.minimum_salaries = salaries / employees;
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+        
+                    case 6: {
+                        int new_level;
+                        cin >> new_level;
+                        int increase = new_level - level;
+                        float cost = increase * 12000;
+        
+                        if (increase > 0 && status.Total_Resources >= cost) {
+                            level = new_level;
+                            status.Total_Resources -= cost;
+                            status.satisfaction_level += 0.002f * increase;
+                            status.sustainable_living += 0.01f * increase;
+                            status.clean_energy += 0.005f * increase;
+                            cout << "✅ Level upgraded. Rs. " << cost << " spent.\n";
+                        } else if (increase <= 0) {
+                            level = new_level;
+                            cout << "Department downgraded or same.\n";
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+        
+                    case 7:
+                        cout << "Exiting update menu...\n";
+                        return;
+        
+                    default:
+                        cout << "Invalid input.\n";
+                        return;
+                }
+        
+                status.satisfaction_level = max(0.0f, min(1.0f, status.satisfaction_level));
+                status.sustainable_living = max(0.0f, min(1.0f, status.sustainable_living));
+                status.clean_energy = max(0.0f, min(1.0f, status.clean_energy));
+        
                 beauty();
-                cout<<"Updated successfully"<<endl;
+                cout << "✅ Update completed successfully!\n";
                 beauty();
-		}
-        void display_new(){
-            cout<<"Level : "<<level<<endl;
-            cout<<"Employees : "<<employees<<endl;
-            cout<<"Salaries : "<<salaries<<endl;
-            cout<<"Students : "<<students<<endl;
-            cout<<"Teachers : "<<teachers<<endl;
-            cout<<"No of classrooms : "<<no_of_classrooms<<endl;
-        }
+            }
 			
 			
 		
@@ -354,72 +596,184 @@ class Transport_Department:virtual public Health_Department
 				this->trafficlights=trafficlights;
 				
 			}
-			void update(){
+			void update(Overall_Status &status) {
                 beauty();
-                cout<<"\n                   What do you want to update in Transport departement: ";
-                cout<<"1.No of electric vehicles"<<endl;
-                cout<<"2.No of petrol vehicles"<<endl;
-                cout<<"3.No of diesel vehicles"<<endl;
-                cout<<"4.Traffic lights"<<endl;
-                cout<<"5.Salaries"<<endl;
-                cout<<"6.Employees"<<endl;
-                cout<<"7.Level"<<endl;
-                cout<<"8.Exit"<<endl;
-                beauty();
+                cout << "\n========= Transport Department Update Menu =========\n";
+                cout << "1. Update Number of Electric Vehicles\n";
+                cout << "2. Update Number of Petrol Vehicles\n";
+                cout << "3. Update Number of Diesel Vehicles\n";
+                cout << "4. Update Number of Traffic Lights\n";
+                cout << "5. Increase Salaries (by % for N employees)\n";
+                cout << "6. Update Number of Employees\n";
+                cout << "7. Upgrade Department Level\n";
+                cout << "8. Exit\n";
+                cout << "=====================================================\n";
+                cout << "Enter your option (1-8): ";
+        
                 int option;
-                cout<<"\nEnter the option : ";
-                cin>>option;
-                switch (option)
-                {
-                case 1:
-                cout<<"Enter the new number of electric vehicles : ";
-                cin>>no_of_electricvehicles;
-                break;
-                case 2:
-                cout<<"Enter the new number of petrol vehicles : ";
-                cin>>no_of_petrolvehicles;
-                break;
-                case 3:
-                cout<<"Enter the new number of diesel vehicles : ";
-                cin>>no_of_dieselvehicles;
-                break;
-                case 4:
-                cout<<"Enter the new number of traffic lights : ";
-                cin>>trafficlights;
-                break;
-                case 5:
-                cout<<"Enter the new salaries : ";
-                cin>>salaries;
-                break;
-                case 6:
-                cout<<"Enter the new number of employees: ";
-                cin>>employees;
-                break;
-                case 7:
-                cout<<"Enter the new level: ";
-                cin>>level;
-                break;
-                case 8:
-                cout<<"Exiting .....";
-                return;
-                break;
-                default:
-                cout<<"Invalid input"<<endl;
-                break;
+                cin >> option;
+        
+                switch(option) {
+                    case 1: {
+                        int new_electric;
+                        cin >> new_electric;
+                        int increase = new_electric - no_of_electricvehicles;
+                        float cost = increase * 10000;
+        
+                        if (increase <= 0 || status.Total_Resources >= cost) {
+                            no_of_electricvehicles = new_electric;
+                            if (increase > 0) {
+                                status.Total_Resources -= cost;
+                                status.clean_energy += 0.005 * increase;
+                                status.sustainable_living += 0.002 * increase;
+                                cout << "✅ Electric vehicles increased. Rs. " << cost << " spent.\n";
+                            }
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+        
+                    case 2: {
+                        int new_petrol;
+                        cin >> new_petrol;
+                        int increase = new_petrol - no_of_petrolvehicles;
+                        float cost = increase * 7000;
+        
+                        if (increase <= 0 || status.Total_Resources >= cost) {
+                            no_of_petrolvehicles = new_petrol;
+                            if (increase > 0) {
+                                status.Total_Resources -= cost;
+                                cout << "✅ Petrol vehicles increased. Rs. " << cost << " spent.\n";
+                            }
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+        
+                    case 3: {
+                        int new_diesel;
+                        cin >> new_diesel;
+                        int increase = new_diesel - no_of_dieselvehicles;
+                        float cost = increase * 8000;
+        
+                        if (increase <= 0 || status.Total_Resources >= cost) {
+                            no_of_dieselvehicles = new_diesel;
+                            if (increase > 0) {
+                                status.Total_Resources -= cost;
+                                cout << "✅ Diesel vehicles increased. Rs. " << cost << " spent.\n";
+                            }
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+        
+                    case 4: {
+                        int new_lights;
+                        cin >> new_lights;
+                        int increase = new_lights - trafficlights;
+                        float cost = increase * 2000;
+        
+                        if (increase <= 0 || status.Total_Resources >= cost) {
+                            trafficlights = new_lights;
+                            if (increase > 0) {
+                                status.Total_Resources -= cost;
+                                status.satisfaction_level += 0.001 * increase;
+                                cout << "✅ Traffic lights increased. Rs. " << cost << " spent.\n";
+                            }
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+        
+                    case 5: {
+                        int num_employees;
+                        double percent;
+                        cin >> num_employees;
+        
+                        if (num_employees > employees) {
+                            cout << "❌ Error: Number exceeds total employees.\n";
+                            break;
+                        }
+        
+                        cin >> percent;
+                        double individual_salary = (employees > 0) ? salaries / employees : 0;
+                        double increment_per_person = individual_salary * percent / 100.0;
+                        double total_increment = increment_per_person * num_employees;
+        
+                        if (status.Total_Resources >= total_increment) {
+                            salaries += total_increment;
+                            status.Total_Resources -= total_increment;
+                            status.satisfaction_level += 0.002 * num_employees;
+                            cout << "✅ Salaries increased. Rs. " << total_increment << " spent.\n";
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+        
+                    case 6: {
+                        int new_employees;
+                        cin >> new_employees;
+                        int increase = new_employees - employees;
+                        float cost = increase * 4000;
+        
+                        if (increase <= 0 || status.Total_Resources >= cost) {
+                            employees = new_employees;
+                            if (increase > 0) {
+                                status.Total_Resources -= cost;
+                                status.satisfaction_level += 0.001 * increase;
+                                cout << "✅ Employees increased. Rs. " << cost << " spent.\n";
+                            }
+                            if (employees > 0)
+                                status.minimum_salaries = salaries / employees;
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+        
+                    case 7: {
+                        int new_level;
+                        cin >> new_level;
+                        int increase = new_level - level;
+                        float cost = increase * 15000;
+        
+                        if (increase > 0 && status.Total_Resources >= cost) {
+                            level = new_level;
+                            status.Total_Resources -= cost;
+                            status.satisfaction_level += 0.002 * increase;
+                            status.clean_energy += 0.01 * increase;
+                            cout << "✅ Level upgraded. Rs. " << cost << " spent.\n";
+                        } else if (increase <= 0) {
+                            level = new_level;
+                            cout << "Department downgraded or same.\n";
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+        
+                    case 8:
+                        cout << "Exiting update menu...\n";
+                        return;
+        
+                    default:
+                        cout << "Invalid input.\n";
+                        return;
                 }
+        
+                status.satisfaction_level = max(0.0f, min(1.0f, status.satisfaction_level));
+                status.sustainable_living = max(0.0f, min(1.0f, status.sustainable_living));
+                status.clean_energy = max(0.0f, min(1.0f, status.clean_energy));
+        
                 beauty();
-                cout<<"Updated successfully"<<endl;
+                cout << "✅ Update completed successfully!\n";
                 beauty();
-		}
-        void display_new(){
-            cout<<"Level : "<<level<<endl;
-            cout<<"Employees : "<<employees<<endl;
-            cout<<"Salaries : "<<salaries<<endl;
-            cout<<"No of electric vehicles : "<<no_of_electricvehicles<<endl;
-            cout<<"No of petrol vehicles : "<<no_of_petrolvehicles<<endl;
-            cout<<"No of diesel vehicles : "<<no_of_dieselvehicles<<endl;
-            cout<<"Traffic lights : "<<trafficlights<<endl;
-        }
+            }
         
 			
 };
@@ -437,72 +791,172 @@ class Construction_Department:virtual public Health_Department
 				this->no_of_parks=no_of_parks;
 				this->no_of_resedentialbuildings=no_of_resedentialbuildings;
 			}	
-		void update(){
-            beauty();
-            cout<<"\n                   What do you want to update in Construction Department?"<<endl;
-            cout<<"1.No of resedential buildings"<<endl;
-            cout<<"2.No of industrial buildings"<<endl;
-            cout<<"3.No of roads"<<endl;
-            cout<<"4.No of parks"<<endl;
-            cout<<"5.Salaries"<<endl;
-            cout<<"6.Employees"<<endl;
-            cout<<"7.Level"<<endl;
-            cout<<"8.Exit"<<endl;
-            beauty();
-            int option;
-            cout<<"Enter the option : ";
-            cin>>option;
-            switch (option)
-            {
-                case 1:
-                cout<<"Enter the new number of resedential buildings : ";
-                cin>>no_of_resedentialbuildings;
-                break;
-                case 2:
-                cout<<"Enter the new number of industrial buildings : ";
-                cin>>no_of_industrialbuildings;
-                break;
-                case 3:
-                cout<<"Enter the new number of roads : ";
-                cin>>no_of_roads;
-                break;
-                case 4:
-                cout<<"Enter the new number of parks : ";
-                cin>>no_of_parks;
-                break;
-                case 5:
-                cout<<"Enter the new salaries : ";
-                cin>>salaries;
-                break;
-                case 6:
-                cout<<"Enter the new number of employees : ";
-                cin>>employees;
-                break;
-                case 7:
-                cout<<"Enter the new level : ";
-                cin>>level;
-                break;
-                case 8:
-                cout<<"Exiting .....";
-                return;
-                break;
-                default:
-                cout<<"Invalid input"<<endl;
-                break;
-		}
-            beauty();
-        cout<<"Updated successfully"<<endl;
-        beauty();
-        }
-        void display_new(){
-            cout<<"Level : "<<level<<endl;
-            cout<<"Employees : "<<employees<<endl;
-            cout<<"Salaries : "<<salaries<<endl;
-            cout<<"No of resedential buildings : "<<no_of_resedentialbuildings<<endl;
-            cout<<"No of industrial buildings : "<<no_of_industrialbuildings<<endl;
-            cout<<"No of roads : "<<no_of_roads<<endl;
-            cout<<"No of parks : "<<no_of_parks<<endl;
-        }
+		    void update(Overall_Status &status) {
+                beauty();
+                cout << "\n========= Construction Department Update Menu =========\n";
+                cout << "1. Update Number of Residential Buildings\n";
+                cout << "2. Update Number of Industrial Buildings\n";
+                cout << "3. Update Number of Roads\n";
+                cout << "4. Update Number of Parks\n";
+                cout << "5. Update Salaries (by % for N employees)\n";
+                cout << "6. Update Number of Employees\n";
+                cout << "7. Upgrade Department Level\n";
+                cout << "8. Exit\n";
+                cout << "=========================================================\n";
+                cout << "Enter your option (1-8): ";
+            
+                int option;
+                cin >> option;
+            
+                switch(option) {
+                    case 1: {
+                        int new_residential;
+                        cin >> new_residential;
+                        int increase = new_residential - no_of_resedentialbuildings;
+                        float cost = increase * 5000; // Cost per building
+            
+                        if (increase <= 0 || status.Total_Resources >= cost) {
+                            no_of_resedentialbuildings = new_residential;
+                            if (increase > 0) {
+                                status.Total_Resources -= cost;
+                                cout << "✅ Residential buildings increased. Rs. " << cost << " spent.\n";
+                            }
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+            
+                    case 2: {
+                        int new_industrial;
+                        cin >> new_industrial;
+                        int increase = new_industrial - no_of_industrialbuildings;
+                        float cost = increase * 10000; // Cost per building
+            
+                        if (increase <= 0 || status.Total_Resources >= cost) {
+                            no_of_industrialbuildings = new_industrial;
+                            if (increase > 0) {
+                                status.Total_Resources -= cost;
+                                cout << "✅ Industrial buildings increased. Rs. " << cost << " spent.\n";
+                            }
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+            
+                    case 3: {
+                        int new_roads;
+                        cin >> new_roads;
+                        int increase = new_roads - no_of_roads;
+                        float cost = increase * 2000; // Cost per road
+            
+                        if (increase <= 0 || status.Total_Resources >= cost) {
+                            no_of_roads = new_roads;
+                            if (increase > 0) {
+                                status.Total_Resources -= cost;
+                                cout << "✅ Roads increased. Rs. " << cost << " spent.\n";
+                            }
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+            
+                    case 4: {
+                        int new_parks;
+                        cin >> new_parks;
+                        int increase = new_parks - no_of_parks;
+                        float cost = increase * 1500; // Cost per park
+            
+                        if (increase <= 0 || status.Total_Resources >= cost) {
+                            no_of_parks = new_parks;
+                            if (increase > 0) {
+                                status.Total_Resources -= cost;
+                                cout << "✅ Parks increased. Rs. " << cost << " spent.\n";
+                            }
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+            
+                    case 5: {
+                        int num_employees;
+                        double percent;
+                        cin >> num_employees;
+            
+                        if (num_employees > employees) {
+                            cout << "❌ Error: Number exceeds total employees.\n";
+                            break;
+                        }
+            
+                        cin >> percent;
+                        double individual_salary = (employees > 0) ? salaries / employees : 0;
+                        double increment_per_person = individual_salary * percent / 100.0;
+                        double total_increment = increment_per_person * num_employees;
+            
+                        if (status.Total_Resources >= total_increment) {
+                            salaries += total_increment;
+                            status.Total_Resources -= total_increment;
+                            cout << "✅ Salaries increased. Rs. " << total_increment << " spent.\n";
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+            
+                    case 6: {
+                        int new_employees;
+                        cin >> new_employees;
+                        int increase = new_employees - employees;
+                        float cost = increase * 4000; // Cost per employee
+            
+                        if (increase <= 0 || status.Total_Resources >= cost) {
+                            employees = new_employees;
+                            if (increase > 0) {
+                                status.Total_Resources -= cost;
+                                cout << "✅ Employees increased. Rs. " << cost << " spent.\n";
+                            }
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+            
+                    case 7: {
+                        int new_level;
+                        cin >> new_level;
+                        int increase = new_level - level;
+                        float cost = increase * 10000; // Cost per level upgrade
+            
+                        if (increase > 0 && status.Total_Resources >= cost) {
+                            level = new_level;
+                            status.Total_Resources -= cost;
+                            cout << "✅ Level upgraded. Rs. " << cost << " spent.\n";
+                        } else if (increase <= 0) {
+                            level = new_level;
+                            cout << "Department downgraded or same.\n";
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+            
+                    case 8:
+                        cout << "Exiting update menu...\n";
+                        return;
+            
+                    default:
+                        cout << "Invalid input.\n";
+                        return;
+                }
+            
+                status.satisfaction_level = max(0.0f, min(1.0f, status.satisfaction_level));
+                beauty();
+                cout << "✅ Update completed successfully!\n";
+                beauty();
+            }
 };
 class Police_Department:virtual public Health_Department
 {
@@ -514,55 +968,110 @@ class Police_Department:virtual public Health_Department
 			Police_Department(int level, double salaries, int employees,int no_of_stations):Health_Department( level, employees, salaries){
 				this->no_of_stations=no_of_stations;	
 			}
-			void update(){
+			void update(Overall_Status &status) {
                 beauty();
-                cout<<"\n               What do you want to update in Police department: ";
-                cout<<"1.No of stations"<<endl;
-                cout<<"2.Salaries"<<endl;
-                cout<<"3.Employees"<<endl;
-                cout<<"4.Level"<<endl;
-                cout<<"5.Exit"<<endl;
+                cout << "\n               What do you want to update in Police Department?\n";
+                cout << "1. Update Number of Stations\n";
+                cout << "2. Update Salaries\n";
+                cout << "3. Update Number of Employees\n";
+                cout << "4. Update Department Level\n";
+                cout << "5. Exit\n";
                 beauty();
+            
                 int option;
-                cout<<"Enter the option : ";
-                cin>>option;
-                switch (option)
-                {
-                    case 1:
-                    cout<<"Enter the new number of stations : ";
-                    cin>>no_of_stations;
-                    break;
-                    case 2:
-                    cout<<"Enter the new salaries : ";
-                    cin>>salaries;
-                    break;
-                    case 3:
-                    cout<<"Enter the new number of employees : ";
-                    cin>>employees;
-                    break;
-                    case 4:
-                    cout<<"Enter the new level : ";
-                    cin>>level;
-                    break;
+                cout << "Enter your option (1-5): ";
+                cin >> option;
+            
+                switch(option) {
+                    case 1: {
+                        int new_stations;
+                        cout << "Enter the new number of stations: ";
+                        cin >> new_stations;
+                        int increase = new_stations - no_of_stations;
+                        float cost = increase * 5000; // Cost per station
+            
+                        if (increase <= 0 || status.Total_Resources >= cost) {
+                            no_of_stations = new_stations;
+                            if (increase > 0) {
+                                status.Total_Resources -= cost;
+                                cout << "✅ Number of stations updated. Rs. " << cost << " spent.\n";
+                            }
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+            
+                    case 2: {
+                        float new_salaries;
+                        cout << "Enter the new salaries: ";
+                        cin >> new_salaries;
+            
+                        if (status.Total_Resources >= new_salaries - salaries) {
+                            salaries = new_salaries;
+                            status.Total_Resources -= new_salaries - salaries;
+                            cout << "✅ Salaries updated. Rs. " << (new_salaries - salaries) << " spent.\n";
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+            
+                    case 3: {
+                        int new_employees;
+                        cout << "Enter the new number of employees: ";
+                        cin >> new_employees;
+                        int increase = new_employees - employees;
+                        float cost = increase * 3000; // Cost per employee
+            
+                        if (increase <= 0 || status.Total_Resources >= cost) {
+                            employees = new_employees;
+                            if (increase > 0) {
+                                status.Total_Resources -= cost;
+                                cout << "✅ Number of employees updated. Rs. " << cost << " spent.\n";
+                            }
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+            
+                    case 4: {
+                        int new_level;
+                        cout << "Enter the new department level: ";
+                        cin >> new_level;
+                        int increase = new_level - level;
+                        float cost = increase * 10000; // Cost per level upgrade
+            
+                        if (increase > 0 && status.Total_Resources >= cost) {
+                            level = new_level;
+                            status.Total_Resources -= cost;
+                            cout << "✅ Department level updated. Rs. " << cost << " spent.\n";
+                        } else if (increase <= 0) {
+                            level = new_level;
+                            cout << "Department level downgraded or remained the same.\n";
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+            
                     case 5:
-                    cout<<"Exiting .....";
-                    return;
-                    break;
+                        cout << "Exiting update menu...\n";
+                        return;
+            
                     default:
-                    cout<<"Invalid input"<<endl;
-                    break;
-				
-			}
-            beauty();
-            cout<<"Updated successfully"<<endl;
-            beauty();
-        }
-        void display_new(){
-            cout<<"Level : "<<level<<endl;
-            cout<<"Employees : "<<employees<<endl;
-            cout<<"Salaries : "<<salaries<<endl;
-            cout<<"No of stations : "<<no_of_stations<<endl;
-        }  
+                        cout << "Invalid input.\n";
+                        return;
+                }
+            
+                
+                status.satisfaction_level = max(0.0f, min(1.0f, status.satisfaction_level));
+            
+                beauty();
+                cout << "✅ Update completed successfully!\n";
+                beauty();
+            }  
 			
 };
 class Maintainence_Department:virtual public Health_Department
@@ -577,60 +1086,112 @@ class Maintainence_Department:virtual public Health_Department
 			this->completed_tasks=completed_tasks;
 			}
 			
-			void update(){
+			void update(Overall_Status &status) {
                 beauty();
-                cout<<"\n                   What do you want to update in Maintainence department: ";
-                cout<<"1.Pending requests"<<endl;
-                cout<<"2.Completed tasks"<<endl;
-                cout<<"3.Salaries"<<endl;
-                cout<<"4.Employees"<<endl;
-                cout<<"5.Level"<<endl;
-                cout<<"6.Exit"<<endl;
+                cout << "\n                   What do you want to update in Maintenance department?\n";
+                cout << "1. Update Pending Requests\n";
+                cout << "2. Update Completed Tasks\n";
+                cout << "3. Update Salaries\n";
+                cout << "4. Update Number of Employees\n";
+                cout << "5. Update Department Level\n";
+                cout << "6. Exit\n";
                 beauty();
+            
                 int option;
-                cout<<"Enter the option : ";
-                cin>>option;
-                switch (option)
-                {
-                    case 1:
-                    cout<<"Enter the new number of pending requests : ";
-                    cin>>pending_requests;
-                    break;
-                    case 2:
-                    cout<<"Enter the new number of completed tasks : ";
-                    cin>>completed_tasks;
-                    break;
-                    case 3:
-                    cout<<"Enter the new salaries : ";
-                    cin>>salaries;
-                    break;
-                    case 4:
-                    cout<<"Enter the new number of employees : ";
-                    cin>>employees;
-                    break;
-                    case 5:
-                    cout<<"Enter the new level : ";
-                    cin>>level;
-                    break;
+                cout << "Enter your option (1-6): ";
+                cin >> option;
+            
+                switch(option) {
+                    case 1: {
+                        int new_pending_requests;
+                        cout << "Enter the new number of pending requests: ";
+                        cin >> new_pending_requests;
+            
+                        pending_requests = new_pending_requests;
+                        cout << "✅ Pending requests updated.\n";
+                        break;
+                    }
+            
+                    case 2: {
+                        int new_completed_tasks;
+                        cout << "Enter the new number of completed tasks: ";
+                        cin >> new_completed_tasks;
+            
+                        completed_tasks = new_completed_tasks;
+                        cout << "✅ Completed tasks updated.\n";
+                        break;
+                    }
+            
+                    case 3: {
+                        float new_salaries;
+                        cout << "Enter the new salaries: ";
+                        cin >> new_salaries;
+            
+                        if (status.Total_Resources >= new_salaries - salaries) {
+                            salaries = new_salaries;
+                            status.Total_Resources -= new_salaries - salaries;
+                            cout << "✅ Salaries updated. Rs. " << (new_salaries - salaries) << " spent.\n";
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+            
+                    case 4: {
+                        int new_employees;
+                        cout << "Enter the new number of employees: ";
+                        cin >> new_employees;
+                        int increase = new_employees - employees;
+                        float cost = increase * 3000; // Cost per employee
+            
+                        if (increase <= 0 || status.Total_Resources >= cost) {
+                            employees = new_employees;
+                            if (increase > 0) {
+                                status.Total_Resources -= cost;
+                                cout << "✅ Number of employees updated. Rs. " << cost << " spent.\n";
+                            }
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+            
+                    case 5: {
+                        int new_level;
+                        cout << "Enter the new department level: ";
+                        cin >> new_level;
+                        int increase = new_level - level;
+                        float cost = increase * 10000; // Cost per level upgrade
+            
+                        if (increase > 0 && status.Total_Resources >= cost) {
+                            level = new_level;
+                            status.Total_Resources -= cost;
+                            cout << "✅ Department level updated. Rs. " << cost << " spent.\n";
+                        } else if (increase <= 0) {
+                            level = new_level;
+                            cout << "Department level downgraded or remained the same.\n";
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
+                        break;
+                    }
+            
                     case 6:
-                    cout<<"Exiting .....";
-                    return;
-                    break;
+                        cout << "Exiting update menu...\n";
+                        return;
+            
                     default:
-                    cout<<"Invalid input"<<endl;
-                    break;
-			}
-            beauty();
-            cout<<"Updated successfully"<<endl;
-            beauty();
-        }
-        void display_new(){
-            cout<<"Level : "<<level<<endl;
-            cout<<"Employees : "<<employees<<endl;
-            cout<<"Salaries : "<<salaries<<endl;
-            cout<<"Pending requests : "<<pending_requests<<endl;
-            cout<<"Completed tasks : "<<completed_tasks<<endl;
-        }
+                        cout << "Invalid input.\n";
+                        return;
+                }
+            
+                
+                status.satisfaction_level = max(0.0f, min(1.0f, status.satisfaction_level));
+            
+                beauty();
+                cout << "✅ Update completed successfully!\n";
+                beauty();
+            }
 			
 				
 };
@@ -645,60 +1206,110 @@ class Environmental_Department: virtual public Health_Department
 				this->renewableresources=renewableresources;
 			}
 			
-				void update(){
-                    beauty();
-                    cout<<"\n               What do you want to update in Enviornmental department: ";
-                    cout<<"1.No of parks"<<endl;
-                    cout<<"2.Renewable resources"<<endl;
-                    cout<<"3.Salaries"<<endl;
-                    cout<<"4.Employees"<<endl;
-                    cout<<"5.Level"<<endl;
-                    cout<<"6.Exit"<<endl;
-                    beauty();
-                    cout<<"Enter the option : ";
-                    int option;
-                    cin>>option;
-                    switch (option)
-                    {
-                        case 1:
-                        cout<<"Enter the new number of parks : ";
-                        cin>>no_of_parks;
+            void update(Overall_Status &status) {
+                beauty();
+                cout << "\n               What do you want to update in Environmental department?\n";
+                cout << "1. Update Number of Parks\n";
+                cout << "2. Update Renewable Resources\n";
+                cout << "3. Update Salaries\n";
+                cout << "4. Update Number of Employees\n";
+                cout << "5. Update Department Level\n";
+                cout << "6. Exit\n";
+                beauty();
+                cout << "Enter your option (1-6): ";
+                
+                int option;
+                cin >> option;
+                
+                switch (option) {
+                    case 1: {
+                        int new_parks;
+                        cout << "Enter the new number of parks: ";
+                        cin >> new_parks;
+                        no_of_parks = new_parks;
+                        cout << "✅ Number of parks updated.\n";
                         break;
-                        case 2:
-                        cout<<"Enter the new renewable resources : ";
-                        cin>>renewableresources;
+                    }
+            
+                    case 2: {
+                        float new_renewable_resources;
+                        cout << "Enter the new renewable resources: ";
+                        cin >> new_renewable_resources;
+                        renewableresources = new_renewable_resources;
+                        cout << "✅ Renewable resources updated.\n";
                         break;
-                        case 3:
-                        cout<<"Enter the new salaries : ";
-                        cin>>salaries;
+                    }
+            
+                    case 3: {
+                        float new_salaries;
+                        cout << "Enter the new salaries: ";
+                        cin >> new_salaries;
+            
+                        if (status.Total_Resources >= new_salaries - salaries) {
+                            salaries = new_salaries;
+                            status.Total_Resources -= new_salaries - salaries;
+                            cout << "✅ Salaries updated. Rs. " << (new_salaries - salaries) << " spent.\n";
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
                         break;
-                        case 4:
-                        cout<<"Enter the new number of employees : ";
-                        cin>>employees;
+                    }
+            
+                    case 4: {
+                        int new_employees;
+                        cout << "Enter the new number of employees: ";
+                        cin >> new_employees;
+                        int increase = new_employees - employees;
+                        float cost = increase * 3000; // Cost per employee
+            
+                        if (increase <= 0 || status.Total_Resources >= cost) {
+                            employees = new_employees;
+                            if (increase > 0) {
+                                status.Total_Resources -= cost;
+                                cout << "✅ Number of employees updated. Rs. " << cost << " spent.\n";
+                            }
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
                         break;
-                        case 5:
-                        cout<<"Enter the new level : ";
-                        cin>>level;
+                    }
+            
+                    case 5: {
+                        int new_level;
+                        cout << "Enter the new department level: ";
+                        cin >> new_level;
+                        int increase = new_level - level;
+                        float cost = increase * 10000; // Cost per level upgrade
+            
+                        if (increase > 0 && status.Total_Resources >= cost) {
+                            level = new_level;
+                            status.Total_Resources -= cost;
+                            cout << "✅ Department level updated. Rs. " << cost << " spent.\n";
+                        } else if (increase <= 0) {
+                            level = new_level;
+                            cout << "Department level downgraded or remained the same.\n";
+                        } else {
+                            cout << "❌ Not enough resources.\n";
+                        }
                         break;
-                        case 6:
-                        cout<<"Exiting .....";
+                    }
+            
+                    case 6:
+                        cout << "Exiting update menu...\n";
                         return;
-                        break;
-                        default:
-                        cout<<"Invalid input"<<endl;
-                        break;
-			}
-            beauty();
-            cout<<"Updated successfully"<<endl;
-            beauty();
-        }
-        void display_new(){
-            cout<<"Level : "<<level<<endl;
-            cout<<"Employees : "<<employees<<endl;
-            cout<<"Salaries : "<<salaries<<endl;
-            cout<<"No of parks : "<<no_of_parks<<endl;
-            cout<<"Renewable resources : "<<renewableresources<<endl;
-        }
+            
+                    default:
+                        cout << "Invalid input.\n";
+                        return;
+                }
+            
+                
+                status.satisfaction_level = max(0.0f, min(1.0f, status.satisfaction_level));
+                
+                beauty();
+                cout << "✅ Update completed successfully!\n";
+                beauty();
+            }
 			
 			
 };
@@ -714,98 +1325,114 @@ private:
 			this->power_plant=power_plant;
 		}
 		
-		void update(){
+		void update(Overall_Status &status) {
             beauty();
-            cout<<"\n                   What do you want to update in Resource Managment department: ";
-            cout<<"1.Water reserviors"<<endl;
-            cout<<"2.Power plant"<<endl;
-            cout<<"3.Salaries"<<endl;
-            cout<<"4.Employees"<<endl;
-            cout<<"5.Level"<<endl;
-            cout<<"6.Exit"<<endl;
+            cout << "\n                   What do you want to update in Resource Management department?\n";
+            cout << "1. Update Number of Water Reservoirs\n";
+            cout << "2. Update Number of Power Plants\n";
+            cout << "3. Update Salaries\n";
+            cout << "4. Update Number of Employees\n";
+            cout << "5. Update Department Level\n";
+            cout << "6. Exit\n";
             beauty();
-            cout<<"Enter the option : ";
+            cout << "Enter your option (1-6): ";
+            
             int option;
-            cin>>option;
-            switch (option)
-            {
-                case 1:
-                cout<<"Enter the new number of water reserviors : ";
-                cin>>water_reserviors;
-                break;
-                case 2:
-                cout<<"Enter the new number of power plants : ";
-                cin>>power_plant;
-                break;
-                case 3:
-                cout<<"Enter the new salaries : ";
-                cin>>salaries;
-                break;
-                case 4:
-                cout<<"Enter the new number of employees : ";
-                cin>>employees;
-                break;
-                case 5:
-                cout<<"Enter the new level : ";
-                cin>>level;
-                break;
+            cin >> option;
+            
+            switch (option) {
+                case 1: {
+                    int new_water_reserviors;
+                    cout << "Enter the new number of water reservoirs: ";
+                    cin >> new_water_reserviors;
+                    water_reserviors = new_water_reserviors;
+                    cout << "✅ Water reservoirs updated.\n";
+                    break;
+                }
+        
+                case 2: {
+                    int new_power_plant;
+                    cout << "Enter the new number of power plants: ";
+                    cin >> new_power_plant;
+                    power_plant = new_power_plant;
+                    cout << "✅ Power plants updated.\n";
+                    break;
+                }
+        
+                case 3: {
+                    float new_salaries;
+                    cout << "Enter the new salaries: ";
+                    cin >> new_salaries;
+        
+                    if (status.Total_Resources >= new_salaries - salaries) {
+                        salaries = new_salaries;
+                        status.Total_Resources -= new_salaries - salaries;
+                        cout << "✅ Salaries updated. Rs. " << (new_salaries - salaries) << " spent.\n";
+                    } else {
+                        cout << "❌ Not enough resources.\n";
+                    }
+                    break;
+                }
+        
+                case 4: {
+                    int new_employees;
+                    cout << "Enter the new number of employees: ";
+                    cin >> new_employees;
+                    int increase = new_employees - employees;
+                    float cost = increase * 3000; // Cost per employee
+        
+                    if (increase <= 0 || status.Total_Resources >= cost) {
+                        employees = new_employees;
+                        if (increase > 0) {
+                            status.Total_Resources -= cost;
+                            cout << "✅ Number of employees updated. Rs. " << cost << " spent.\n";
+                        }
+                    } else {
+                        cout << "❌ Not enough resources.\n";
+                    }
+                    break;
+                }
+        
+                case 5: {
+                    int new_level;
+                    cout << "Enter the new department level: ";
+                    cin >> new_level;
+                    int increase = new_level - level;
+                    float cost = increase * 10000; // Cost per level upgrade
+        
+                    if (increase > 0 && status.Total_Resources >= cost) {
+                        level = new_level;
+                        status.Total_Resources -= cost;
+                        cout << "✅ Department level updated. Rs. " << cost << " spent.\n";
+                    } else if (increase <= 0) {
+                        level = new_level;
+                        cout << "Department level downgraded or remained the same.\n";
+                    } else {
+                        cout << "❌ Not enough resources.\n";
+                    }
+                    break;
+                }
+        
                 case 6:
-                cout<<"Exiting .....";
-                return;
-                break;
+                    cout << "Exiting update menu...\n";
+                    return;
+        
                 default:
-                cout<<"Invalid input"<<endl;
-                break;
-		}
+                    cout << "Invalid input.\n";
+                    return;
+            }
+        
+            
+            status.satisfaction_level = max(0.0f, min(1.0f, status.satisfaction_level));
+            
             beauty();
-        cout<<"Updated successfully"<<endl;
-        beauty();
-        }
-        void display_new (){
-            cout<<"Level : "<<level<<endl;
-            cout<<"Employees : "<<employees<<endl;
-            cout<<"Salaries : "<<salaries<<endl;
-            cout<<"Water reserviors : "<<water_reserviors<<endl;
-            cout<<"Power plant : "<<power_plant<<endl;
+            cout << "✅ Update completed successfully!\n";
+            beauty();
         }
 		
 	
 };
-class Overall_Status{
-    public:
-    float satisfaction_level;
-    float minimum_salaries;
-    float Total_Resorces;
-    int population;
-    int green_levels;
-    float  sustainable_living;
-    float  clean_energy;
-    public:
-    Overall_Status(float satisfaction_level,float minimum_salaries,float Total_Resorces,int population,int green_levels,float  sustainable_living,float  clean_energy){
-        this->satisfaction_level=satisfaction_level;
-        this->minimum_salaries=minimum_salaries;
-        this->Total_Resorces=Total_Resorces;
-        this->population=population;
-        this->green_levels=green_levels;
-        this->sustainable_living=sustainable_living;
-        this->clean_energy=clean_energy;              
-    }
-    void Display(){
-        beauty();
-        cout<<"\n                           OVERALL STATUS                            "<<endl<<endl;
-        cout<<"\n                                                                        TOTAL RESOURCES : "<<Total_Resorces<<"$"<<endl;
-        cout<<"\nSATISFACTION LEVEL : "<<satisfaction_level<<"%"<<endl;
-        cout<<"\nMINIMUM SALARY : "<<minimum_salaries<<"$"<<endl;
-        cout<<"\nPOPULATION : "<<population<<endl;
-        cout<<"\nGREEEN LEVELS : "<<green_levels<<"%"<<endl;
-        cout<<"\nSASTAINABLE LIVING :"<<sustainable_living<<endl;
-        cout<<"\nCLEAN ENERGY :"<<clean_energy<<endl;
-        beauty();
 
-
-
-    }
-};
 int interlinking_menu(){
     ask:
     int option;
@@ -941,6 +1568,7 @@ int main()
 {
     bool  close_external=true;
     array<string, 2> user_data;
+    Username=user_data[0];
     do{
         char option_external;
         option_external = menu_external();
