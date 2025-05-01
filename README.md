@@ -185,15 +185,16 @@ class Overall_Status{
     int green_levels;
     float  sustainable_living;
     float  clean_energy;
-    public:
-    Overall_Status(float satisfaction_level,float minimum_salaries,float Total_Resources,int population,int green_levels,float  sustainable_living,float  clean_energy){
+    float money;
+    Overall_Status(float satisfaction_level,float minimum_salaries,float Total_Resources,int population,int green_levels,float  sustainable_living,float  clean_energy,  float money){
         this->satisfaction_level=satisfaction_level;
         this->minimum_salaries=minimum_salaries;
         this->Total_Resources=Total_Resources;
         this->population=population;
         this->green_levels=green_levels;
         this->sustainable_living=sustainable_living;
-        this->clean_energy=clean_energy;              
+        this->clean_energy=clean_energy;
+        this->money=money;              
     }
     void Display(){
         beauty();
@@ -206,10 +207,36 @@ class Overall_Status{
         cout<<"\nSASTAINABLE LIVING :"<<sustainable_living<<endl;
         cout<<"\nCLEAN ENERGY :"<<clean_energy<<endl;
         beauty();
-
-
-
     }
+        void UpdateCity() {
+            // Population growth
+            float growth = 0.01;
+            if (satisfaction_level > 0.7) growth += 0.005;
+            if (sustainable_living> 0.6) growth += 0.003;
+            population += population * growth;
+    
+            // Economy
+            float taxes = population * minimum_salaries * 0.1;
+            if (sustainable_living > 0.7) taxes *= 1.1;
+            float costs = population * 50;
+            money += taxes - costs;
+    
+            // Happiness
+            float new_happy = 0.5;
+            new_happy += green_levels/500.0;
+            new_happy += sustainable_living/10.0;
+            new_happy += clean_energy/10.0;
+            satisfaction_level = 0.7*satisfaction_level + 0.3*new_happy;
+        
+        if (satisfaction_level < 0) satisfaction_level = 0;
+        if (satisfaction_level > 1) satisfaction_level = 1;
+        if(money < 0)money = 0;
+        if (population < 0) population = 0;
+        green_levels = sustainable_living* 100;
+    }
+
+
+    
     friend class Health_Department;
 };
 class Health_Department
@@ -259,13 +286,13 @@ class Health_Department
             int increase = new_doctors - doctors;
             if (increase > 0) {
                 float cost = increase * 5000;
-                if (status.Total_Resources >= cost) {
-                    doctors = new_doctors;
+              if (status.Total_Resources >= cost) {
+                   doctors = new_doctors;
                     status.Total_Resources -= cost;
                     status.satisfaction_level += 0.001 * increase;
                     cout << "✅ Doctors increased. Rs. " << cost << " spent.\n";
                 } else {
-                    cout << "❌ Not enough resources.\n";
+                    cout << "❌ Not enough resources.\n"; 
                 }
             } else {
                 doctors = new_doctors;
@@ -1492,7 +1519,7 @@ void Setup()
             }
             else{
                 if(my_file2.peek() == EOF){
-                    Overall_Status city(0,0,100000,0,0,0,0);
+                    Overall_Status city(0.0,0.0,100000.0,0,0,0.0,0.0,0.0);
                     city.Display();
 
             }
