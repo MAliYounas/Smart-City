@@ -3800,11 +3800,13 @@ void Mayor()
 {
     int option;
     beauty();
-    cout << "\n                       WELCOME SIR BACK TO THE OFFICE .<3" << endl;
-    cout << "\nMAY YOU SERVVE THE PEOPLE OF CITY AND MAKE DESICIONS ACCORDING TO THE WELFARE OF SOCIETY" << endl;
+    cout << "\n🏛️  WELCOME BACK TO THE OFFICE, MAYOR! <3\n";
+    cout << "🙏 MAY YOU SERVE THE PEOPLE OF THE CITY WITH HONOR\n";
+    cout << "🤝 AND MAKE DECISIONS FOR THE WELFARE OF SOCIETY.\n";
     beauty();
     Setup();
 }
+
 
 int main()
 {
